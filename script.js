@@ -23,7 +23,7 @@ console.log(stringSubjects)
 
 // 2 
 // Все вместе
-const sum = (Object.values(subjects)).map(el=>el.students+el.teachers).reduce((el,calc)=>el+calc,0)
+let sum = (Object.values(subjects)).map(el=>el.students+el.teachers).reduce((el,calc)=>el+calc,0)
 console.log(sum)
 
 // Количество студентов
@@ -39,10 +39,10 @@ let average = (Object.values(subjects)).reduce((el,calc)=>el+calc.students,0)/Ob
 console.log(average)
 
 // 4
-let arr = Object.values(subjects)
+const arr = Object.values(subjects)
 console.log(arr)
 
-let arr2 = Object.keys(subjects).map(el=>subjects[el])
+const arr2 = Object.keys(subjects).map(el=>subjects[el])
 console.log(arr2)
 
 // 5
