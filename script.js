@@ -23,20 +23,20 @@ console.log(stringSubjects)
 
 // 2 
 // Все вместе
-let sum = (Object.values(subjects)).map(el=>el.students+el.teachers).reduce((el,calc)=>el+calc,0)
+const sum = (Object.values(subjects)).map(el=>el.students+el.teachers).reduce((el,calc)=>el+calc,0)
 console.log(sum)
 
 // Количество студентов
-let sumStudents = (Object.values(subjects)).map(el=>el.students).reduce((el,calc)=>el+calc,0)
+let sumStudents = (Object.values(subjects)).reduce((el,calc)=>el+calc.students,0)
 console.log(sumStudents)
 
 // Количество учителей
-let sumTeachers = (Object.values(subjects)).map(el=>el.teachers).reduce((el,calc)=>el+calc,0)
+let sumTeachers = (Object.values(subjects)).reduce((el,calc)=>el+calc.teachers,0)
 console.log(sumTeachers)
 
 // 3
-let everage = (Object.values(subjects)).map(el=>el.students).reduce((el,calc)=>el+calc,0)/Object.values(subjects).length
-console.log(everage)
+let average = (Object.values(subjects)).reduce((el,calc)=>el+calc.students,0)/Object.values(subjects).length
+console.log(average)
 
 // 4
 let arr = Object.values(subjects)
@@ -46,6 +46,6 @@ let arr2 = Object.keys(subjects).map(el=>subjects[el])
 console.log(arr2)
 
 // 5
-let c = arr.slice().sort((a,b)=>(b.teachers-a.teachers))
-console.log(c)
+const sortEl = arr.slice().sort((a,b)=>(b.teachers-a.teachers))
+console.log(sortEl)
 
