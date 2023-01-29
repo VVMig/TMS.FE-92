@@ -1,4 +1,3 @@
-// const faculties: Array<IFaculty> = [
 var faculties = [
     {
         id: 1,
@@ -71,6 +70,7 @@ var movies = [
         production: "Heyday Films, Moving Picture Company, Warner Bros."
     },
 ];
+;
 var useToggle = function (defaultValue) {
     var isActive = defaultValue || false;
     var setActive = function (newActiveState) { return function () {

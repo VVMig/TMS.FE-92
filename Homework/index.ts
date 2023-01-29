@@ -2,11 +2,9 @@ interface IFaculty {
   id: number;
   faculty: string;
   subjects: string[];
-  // subjects: Array<string>;
   countStudents: number;
 }
 
-// const faculties: Array<IFaculty> = [
 const faculties: IFaculty[] = [
   {
     id: 1,
@@ -45,7 +43,7 @@ interface IMovie {
   year: number;
   released: string;
   runtime: string;
-  genre: string[];
+  genre: string[] | string;
   director: string;
   writer: string;
   actors: Array<string>;
@@ -108,7 +106,12 @@ const movies: IMovie[] = [
   },
 ];
 
-const useToggle = (defaultValue: boolean): [boolean, object] => {
+interface IFunctions {
+	setActive: (param: boolean) => void;
+	toggleActive: FunctionWithoutParams;
+};
+
+const useToggle = (defaultValue?: boolean): [boolean, IFunctions] => {
   let isActive: boolean = defaultValue || false;
 
   const setActive = (newActiveState: boolean) => (): void => {
@@ -128,10 +131,12 @@ const useToggle = (defaultValue: boolean): [boolean, object] => {
   ];
 };
 
+type FunctionWithoutParams = () => void;
+
 interface IPerson {
 	name: string;
 	lastName: string;
-	sayName: object;
+	sayName: FunctionWithoutParams;
 };
 
 const person: IPerson = {
@@ -142,7 +147,7 @@ const person: IPerson = {
   },
 };
 
-function callSayNameForPerson(): void {
+function callSayNameForPerson(this: any): void {
   console.log(this.sayName());
 };
 
