@@ -107,7 +107,7 @@ const movies: IMovie[] = [
 ];
 
 interface IFunctions {
-	setActive: (param: boolean) => void;
+	setActive: (param: boolean) => FunctionWithoutParams;
 	toggleActive: FunctionWithoutParams;
 };
 
@@ -147,7 +147,7 @@ const person: IPerson = {
   },
 };
 
-function callSayNameForPerson(this: any): void {
+function callSayNameForPerson(this: IPerson): void {
   console.log(this.sayName());
 };
 
