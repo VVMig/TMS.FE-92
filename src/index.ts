@@ -32,10 +32,10 @@ const faculties: IFaculty[] = [
   },
 ];
 
-type Address = {
+interface IAddress {
   country: string;
   city: string;
-};
+}
 
 interface IMovie {
   id: number;
@@ -48,7 +48,7 @@ interface IMovie {
   writer: string;
   actors: string[];
   plot: string;
-  address: Address;
+  address: IAddress;
   poster: string;
   imdbRating: number;
   imdbVotes: number;
@@ -116,7 +116,7 @@ interface IFunctions {
   toggleActive: FunctionWithoutParams;
 }
 
-const useToggle = (defaultValue: boolean): [boolean, IFunctions] => {
+const useToggle = (defaultValue?: boolean): [boolean, IFunctions] => {
   let isActive = defaultValue || false;
 
   const setActive =
