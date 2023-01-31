@@ -1,10 +1,10 @@
 /**Протипизировать файл */
 
 interface IFaculty{
-    id: number,
-    faculty: string,
-    subjects: string[],
-    countStudents: number,
+    id: number;
+    faculty: string;
+    subjects: string[];
+    countStudents: number;
 }
 
 
@@ -35,28 +35,29 @@ const faculties:IFaculty[] = [
     },
   ];
   
+interface IAdress{
+  country:string;
+  city:string;
+}
   
 interface IMovie{
-    id: number,
-    title: string,
-    year: number,
-    released: string,
-    runtime: string,
-    genre: string[],
-    director: string,
-    writer: string,
-    actors: string[],
-    plot: string,
-    address: {
-      country: string,
-      city: string,
-    },
-    poster: string,
-    imdbRating: number,
-    imdbVotes: number,
-    type: string,
-    boxOffice: string,
-    production: string,
+    id: number;
+    title: string;
+    year: number;
+    released: string;
+    runtime: string;
+    genre: string[];
+    director: string;
+    writer: string;
+    actors: string[];
+    plot: string;
+    address:IAdress;
+    poster: string;
+    imdbRating: number;
+    imdbVotes: number;
+    type: string;
+    boxOffice: string;
+    production: string;
 }
 
 
@@ -112,12 +113,12 @@ interface IMovie{
   
 
 interface IFunc {
-  setActive:(arg:boolean) => () => void,
-  toggleActive: () => void,
+  setActive:(newActiveState:boolean) => () => void;
+  toggleActive: () => void;
 
 }
   
-  const useToggle = (defaultValue:boolean):[boolean, IFunc] => {
+  const useToggle = (defaultValue?:boolean):[boolean, IFunc] => {
     let isActive = defaultValue || false;
   
     const setActive = (newActiveState:boolean) => ():void=> {
@@ -138,13 +139,10 @@ interface IFunc {
   };
   
 
-
-
-
 interface IPerson {
-  name:string,
-  lastName:string,
-  sayName:() => void,
+  name:string;
+  lastName:string;
+  sayName:() => void;
 
 }
   const person: IPerson = {
@@ -156,11 +154,9 @@ interface IPerson {
   };
   
 
-
-
-  function callSayNameForPerson(this:IPerson) {
+function callSayNameForPerson(this:IPerson) {
     console.log(this.sayName());
-  }
+}
   
   callSayNameForPerson.call(person);
   
