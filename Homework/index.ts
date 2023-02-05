@@ -56,17 +56,14 @@ interface IFindCar {
   cars?: string[];
 }
 
-function findAndCountCarInArray<T extends IFindCar>(arr: T[]): void {
-  const findCars: string[] = arr
-    .filter(({ cars }) => cars)
+function countCarInArray<T extends IFindCar>(arr: T[]): void {
+  const countCars: number = arr
     .map(({ cars }) => cars)
-    .join()
-    .split(",");
-  const countCars: number = findCars.length;
+    .reduce((acc, cur) => (cur ? acc + cur.length : acc + 0), 0);
   console.log(countCars);
 }
 
-findAndCountCarInArray(users);
+countCarInArray(users);
 
 //     3. Создать функцию, которая бы принимала массив пользователей и отфильтровывала пользователей на наличие образования (использовать Generic)
 
@@ -82,7 +79,7 @@ function findWhoHasEducationInArry<T extends IFindEducation>(arr: T[]): void {
   const namesOfEducatedPeople: string = findEducatedPeople
     .map(({ name }) => name)
     .join(", ");
-  console.log(namesOfEducatedPeople);
+  console.log(findEducatedPeople, namesOfEducatedPeople);
 }
 
 findWhoHasEducationInArry(users);
@@ -99,7 +96,7 @@ function findWhoHasAnimalsInArry<T extends IFindEducation>(arr: T[]): void {
   const namesOfEducatedPeople: string = findEducatedPeople
     .map(({ name }) => name)
     .join(", ");
-  console.log(namesOfEducatedPeople);
+  console.log(findEducatedPeople, namesOfEducatedPeople);
 }
 
 findWhoHasAnimalsInArry(users);
@@ -108,12 +105,15 @@ findWhoHasAnimalsInArry(users);
 
 function getBrandsOfCarsInArray<T extends IFindCar>(arr: T[]): string {
   const getBrands: string = arr
-    .filter(({ cars }) => cars)
-    .map(({ cars }) => cars)
+    .reduce(
+      (acc: string[], cur) =>
+        cur.cars?.values ? [...acc, ...cur?.cars] : [...acc],
+      []
+    )
     .join(", ");
+  console.log(getBrands);
   return getBrands;
 }
-
 getBrandsOfCarsInArray(users);
 
 // 6. Создать тип объекта, в качестве ключа которого выступает строка, а в качестве значения элемент массива users (Подсказка: Record)
@@ -182,15 +182,13 @@ class Book implements IBookInfo {
     return this.year;
   }
 
-  static getInfo(author: string, title: string, year: number): string {
-    return `${author}-${title}-${year}`;
+  static getInfo(book: IBookInfo): string {
+    return `${book.author}-${book.title}-${book.year}`;
   }
 }
 
 const book = new Book("title", "author", 2023);
-const getInfoAboutBook = new Book(
-  Book.getInfo(book.Author, book.Title, book.Year)
-);
+const getInfoAboutBook = new Book(Book.getInfo(book));
 
 // 8. Протипизировать функцию используя keyof и generic
 
