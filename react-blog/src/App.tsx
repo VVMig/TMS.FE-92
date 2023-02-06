@@ -1,11 +1,10 @@
 import "./App.css";
-import { Button } from "./components";
+import { Home } from "./pages";
 
 const App = () => {
   return (
     <>
-      <Button>First button</Button>
-      <Button customType="secondary">Disabled button</Button>
+      <Home />
     </>
   );
 };
