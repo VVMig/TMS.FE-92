@@ -1,11 +1,9 @@
+import { CreatePostForm } from "./CreatePostForm";
+
 export const Home = () => {
   return (
-    <div
-      style={{
-        background: "gray",
-      }}
-    >
-      <h1>Home</h1>
+    <div>
+      <CreatePostForm />
     </div>
   );
 };

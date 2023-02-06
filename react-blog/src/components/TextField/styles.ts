@@ -18,6 +18,20 @@ export const StyledInput = styled.input<IProps>`
   }
 `;
 
+export const StyledTextarea = styled.textarea<IProps>`
+  padding: 8px;
+  border-radius: 1px;
+  background-color: #ffffff;
+  border: none;
+  ${(props) => (props.withError ? `outline: 2px solid #f22307;` : undefined)}
+  :disabled {
+    background-color: #cfcecc;
+  }
+  :focus {
+    ${(props) => (!props.withError ? `outline: 2px solid #cfcecc;` : undefined)}
+  }
+`;
+
 export const StyledLabel = styled.label`
   font-size: 16px;
   font-weight: 600;

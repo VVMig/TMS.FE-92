@@ -4,20 +4,26 @@ import {
   StyledError,
   StyledInput,
   StyledLabel,
+  StyledTextarea,
 } from "./styles";
 
-interface IProps {
+interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
+  multiline?: boolean;
 }
 
-export const CommonInput = ({ label, error }: IProps) => {
+export const TextField = ({ label, error, multiline, ...props }: IProps) => {
   const id = useMemo(() => `a${Date.now()}`, []);
 
   return (
     <StyledContainer>
       {!!label && <StyledLabel htmlFor={id}>{label}</StyledLabel>}
-      <StyledInput id={id} withError={!!error} />
+      {multiline ? (
+        <StyledTextarea id={id} withError={!!error} />
+      ) : (
+        <StyledInput id={id} withError={!!error} {...props} />
+      )}
       {error && <StyledError>{error}</StyledError>}
     </StyledContainer>
   );
