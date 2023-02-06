@@ -59,7 +59,7 @@ interface IFindCar {
 function countCarInArray<T extends IFindCar>(arr: T[]): void {
   const countCars: number = arr
     .map(({ cars }) => cars)
-    .reduce((acc, cur) => (cur ? acc + cur.length : acc + 0), 0);
+    .reduce((acc, cur) => (cur ? acc + cur.length : acc), 0);
   console.log(countCars);
 }
 
