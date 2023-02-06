@@ -1,6 +1,10 @@
 export const Home = () => {
   return (
-    <div>
+    <div
+      style={{
+        background: "gray",
+      }}
+    >
       <h1>Home</h1>
     </div>
   );

@@ -6,7 +6,7 @@ interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   customType?: "primary" | "secondary";
 }
 
-export const Button = ({
+export const CommonButton = ({
   children,
   customType = "primary",
   ...props
