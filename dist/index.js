@@ -46,15 +46,14 @@ var sumOfCars = users.map(function (el) {
   return el;
 }).length;
 console.log(sumOfCars);
-var b = [];
-var a = users.reduce(function (b, users) {
-  if (users.cars !== undefined) {
-    var _iterator = _createForOfIteratorHelper(users.cars),
+var sumOfCars2 = users.reduce(function (acc, el) {
+  if (el.cars !== undefined) {
+    var _iterator = _createForOfIteratorHelper(el.cars),
       _step;
     try {
       for (_iterator.s(); !(_step = _iterator.n()).done;) {
         var value = _step.value;
-        b.push(value);
+        acc.push(value);
       }
     } catch (err) {
       _iterator.e(err);
@@ -62,20 +61,19 @@ var a = users.reduce(function (b, users) {
       _iterator.f();
     }
   }
-  return b;
-}, b);
-var lengthCars = b.length;
-console.log(lengthCars);
-function sortByEducation(array) {
+  return acc;
+}, []).length;
+console.log(sumOfCars2);
+function filterByEducation(array) {
   console.log(array.filter(function (el) {
-    return el.hasEducation === true;
+    return el.hasEducation;
   }));
   return array.filter(function (el) {
-    return el.hasEducation === true;
+    return el.hasEducation;
   });
 }
-sortByEducation(users);
-function sortByAnimals(array) {
+filterByEducation(users);
+function filterByAnimals(array) {
   console.log(array.filter(function (el) {
     return el.animals;
   }));
@@ -83,17 +81,16 @@ function sortByAnimals(array) {
     return el.animals;
   });
 }
-sortByAnimals(users);
+filterByAnimals(users);
 function getAllCars(array) {
-  var b = [];
-  var a = array.reduce(function (b, array) {
-    if (array.cars !== undefined) {
-      var _iterator2 = _createForOfIteratorHelper(array.cars),
+  var listOfCars = array.reduce(function (acc, el) {
+    if (el.cars !== undefined) {
+      var _iterator2 = _createForOfIteratorHelper(el.cars),
         _step2;
       try {
         for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
           var value = _step2.value;
-          b.push(value);
+          acc.push(value);
         }
       } catch (err) {
         _iterator2.e(err);
@@ -101,10 +98,9 @@ function getAllCars(array) {
         _iterator2.f();
       }
     }
-    return b;
-  }, b);
-  console.log(b.join(', '));
-  return b.join(', ');
+    return acc;
+  }, []).join(', ');
+  console.log(listOfCars);
 }
 getAllCars(users);
 var usersInfo = {

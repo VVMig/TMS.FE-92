@@ -18,94 +18,85 @@ interface IUsers {
 }
 
 const users:IUsers[] = [
-    {
-      name: "Harry Felton",
-      phone: "(09) 897 33 33",
-      email: "felton@gmail.com",
-      animals: ["cat"],
-      cars: ["bmw"],
-      hasChildren: false,
-      hasEducation: true,
-    },
-    {
-      name: "May Sender",
-      phone: "(09) 117 33 33",
-      email: "sender22@gmail.com",
-      hasChildren: true,
-      hasEducation: true,
-    },
-    {
-      name: "Henry Ford",
-      phone: "(09) 999 93 23",
-      email: "ford0@gmail.com",
-      cars: ["bmw", "audi"],
-      hasChildren: true,
-      hasEducation: false,
-    },
-  ];
+  {
+    name: "Harry Felton",
+    phone: "(09) 897 33 33",
+    email: "felton@gmail.com",
+    animals: ["cat"],
+    cars: ["bmw"],
+    hasChildren: false,
+    hasEducation: true,
+  },
+  {
+    name: "May Sender",
+    phone: "(09) 117 33 33",
+    email: "sender22@gmail.com",
+    hasChildren: true,
+    hasEducation: true,
+  },
+  {
+    name: "Henry Ford",
+    phone: "(09) 999 93 23",
+    email: "ford0@gmail.com",
+    cars: ["bmw", "audi"],
+    hasChildren: true,
+    hasEducation: false,
+  },
+];
   
 // 1
-let namesUsers = users.map(el=>el.name).join(', ')
+const namesUsers = users.map(el=>el.name).join(', ')
 console.log(namesUsers)
 
 // Второй вариант
-let namesUsers2 = users.map(({ name }) => name).join(', ')
+const namesUsers2 = users.map(({ name }) => name).join(', ')
 console.log(namesUsers2)
 
 // 2
-let sumOfCars = users.map(el=>el.cars).join(',').split(',').filter(el=>el).length
+const sumOfCars = users.map(el=>el.cars).join(',').split(',').filter(el=>el).length
 console.log(sumOfCars)
+
 // Второй вариант
-let b:string[] = []
-let a = users.reduce((b,users)=>{
-    if(users.cars !== undefined){
-        for(let value of users.cars){
-        b.push(value)
-        }
+const sumOfCars2 = users.reduce((acc:string[],el)=>{
+  if(el.cars !== undefined){
+    for(let value of el.cars){
+      acc.push(value)
     }
-    return b
-},b)
-    let lengthCars = b.length;
-    console.log(lengthCars)
+  }
+  return acc
+},[]).length
+console.log(sumOfCars2)
 
 // 3
-type hasEducation = Pick<IUsers, 'hasEducation'>;
-function sortByEducation<T extends hasEducation>(array:T[]):T[]{
-    console.log(array.filter(el=>el.hasEducation === true))
-    return array.filter(el=>el.hasEducation === true)
-
+type HasEducation = Pick<IUsers, 'hasEducation'>;
+function filterByEducation<T extends HasEducation>(array:T[]):T[]{
+  console.log(array.filter(el=>el.hasEducation))
+  return array.filter(el=>el.hasEducation)
 }
-sortByEducation(users)
+filterByEducation(users)
 
 // // 4
-type hasAnimals = Pick<IUsers, 'animals'>;
-function sortByAnimals<T extends hasAnimals>(array:T[]):T[]{
-    console.log(array.filter(el=>el.animals));
-    return array.filter(el=>el.animals);
+type HasAnimals = Pick<IUsers, 'animals'>;
+function filterByAnimals<T extends HasAnimals>(array:T[]):T[]{
+  console.log(array.filter(el=>el.animals));
+  return array.filter(el=>el.animals);
 }
-sortByAnimals(users)
+filterByAnimals(users)
 
 // // 5
-type listOfCars = Pick<IUsers, 'cars'>;
-function getAllCars <T extends listOfCars>(array:T[]):string{
-  let b:string[] = []
-  let a = array.reduce((b,array)=>{
-      if(array.cars !== undefined){
-          for(let value of array.cars){
-          b.push(value)
-          }
+type ListOfCars = Pick<IUsers, 'cars'>;
+function getAllCars <T extends ListOfCars>(array:T[]){
+  const listOfCars = array.reduce((acc:string[],el)=>{
+    if(el.cars !== undefined){
+      for(let value of el.cars){
+        acc.push(value)
       }
-      return b
-  },b)
-      console.log(b.join(', '))
-      return b.join(', ')
-
+    }
+    return acc
+},[]).join(', ')
+console.log(listOfCars)
 }
 getAllCars(users)
-
-
-
-
 
 
 //   // 6. Создать тип объекта, в качестве ключа которого выступает строка, а в качестве значения элемент массива users (Подсказка: Record)
@@ -128,17 +119,13 @@ interface IBook{
   setAuthor(author:string):void;
   setYear(year:number):void;
 }
-interface IBookInfo{
-  author:string;
-  name:string;
-  year:number;
-}
+
 class Book implements IBook {
-    constructor(
-      public name:string,
-      public author:string,
-      public year:number,
-    ){}
+  constructor(
+    public name:string,
+    public author:string,
+    public year:number,
+  ){}
   setName(name: string): void {
     this.name = name;
   }
@@ -157,8 +144,7 @@ class Book implements IBook {
   getYear() {
     return this.year
   }
-
-  static info(book:IBookInfo) {
+  static info(book:Book) {
     return `${book.author}-${book.name}-${book.year}`
   }
 }
@@ -170,12 +156,10 @@ console.log(Book.info(infoAboutBook))
 
   
 //   // 8. Протипизировать функцию используя keyof и generic
-
-
-  function extractData<Type, Key extends keyof Type>(obj: Type, key: Key) {
-    return obj[key];
-  }
-  interface IUser{
+function extractData<Type, Key extends keyof Type>(obj: Type, key: Key) {
+  return obj[key];
+}
+interface IUser{
     name:string;
   }
   interface IObject{
@@ -185,7 +169,7 @@ console.log(Book.info(infoAboutBook))
     user: {
       name: "Chris",
     },
-  };
+};
   
-  extractData(object, "user").name;
+extractData(object, "user").name;
 
