@@ -49,7 +49,7 @@ function countCarInArray(arr) {
     var cars = _ref2.cars;
     return cars;
   }).reduce(function (acc, cur) {
-    return cur ? acc + cur.length : acc + 0;
+    return cur ? acc + cur.length : acc;
   }, 0);
   console.log(countCars);
 }
@@ -135,6 +135,7 @@ var Book = /*#__PURE__*/function () {
   }], [{
     key: "getInfo",
     value: function getInfo(book) {
+      console.log("".concat(book.author, "-").concat(book.title, "-").concat(book.year));
       return "".concat(book.author, "-").concat(book.title, "-").concat(book.year);
     }
   }]);

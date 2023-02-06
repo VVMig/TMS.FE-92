@@ -182,7 +182,8 @@ class Book implements IBookInfo {
     return this.year;
   }
 
-  static getInfo(book: IBookInfo): string {
+  //! экземпляр класса, а не интерфейс
+  static getInfo(book: Book): string {
     return `${book.author}-${book.title}-${book.year}`;
   }
 }
