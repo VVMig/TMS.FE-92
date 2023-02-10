@@ -6,11 +6,11 @@ interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   customType?: "primary" | "secondary";
 }
 
-export const CommonButton = ({
+export const CommonButton: React.FC<IProps> = ({
   children,
   customType = "primary",
   ...props
-}: IProps) => {
+}) => {
   return (
     <StyledButton customType={customType} {...props}>
       {children}
