@@ -1,6 +1,6 @@
 import { Form } from "formik";
 import styled from "styled-components";
-import { CommonButton } from "../../../components";
+import { CommonButton } from "../../../../components";
 
 export const StyledForm = styled(Form)`
   padding: 12px;
@@ -10,6 +10,8 @@ export const StyledForm = styled(Form)`
     margin-top: 20px;
   }
 `;
+
+
 
 export const StyledSubmitButton = styled(CommonButton)`
   width: 100%;

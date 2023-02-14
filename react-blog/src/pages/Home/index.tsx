@@ -1,16 +1,18 @@
 import { CircularProgress } from "@mui/material";
-import { withLoading } from "../../hoc/withLoading";
-import { CreatePostForm } from "./CreatePostForm";
+import { useLoading } from "../../hooks/useLoading";
+import { Auth } from "./Auth";
 import { StyledContainer } from "./styles";
 
 interface IProps {
-  time: Date;
+  time?: Date;
 }
 
-export const Home = withLoading<IProps>(({ isLoading }) => {
+export const Home = ({ time }: IProps) => {
+  const { isLoading } = useLoading(false);
+
   return (
     <StyledContainer>
-      {isLoading ? <CircularProgress /> : <CreatePostForm />}
+      {isLoading ? <CircularProgress /> : <Auth />}
     </StyledContainer>
   );
-}, false);
+};
