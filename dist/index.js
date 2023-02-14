@@ -49,28 +49,31 @@ var countCars2 = users.reduce(function (acc, el) {
   return acc;
 }, 0);
 console.log(countCars2);
-var UsersWithEducation = function UsersWithEducation(arr) {
+var filterUsersWithEducation = function filterUsersWithEducation(arr) {
   return arr.filter(function (el) {
     return el.hasEducation === true;
   });
 };
-console.log(UsersWithEducation(users));
-var UsersWithAnimals = function UsersWithAnimals(arr) {
+console.log(filterUsersWithEducation(users));
+var filterUsersWithAnimals = function filterUsersWithAnimals(arr) {
   return arr.filter(function (el) {
     return el.animals;
   });
 };
-console.log(UsersWithAnimals(users));
-var carsString = function carsString(arr) {
+console.log(filterUsersWithAnimals(users));
+var createCarsString = function createCarsString(arr) {
   var result = [];
   arr.forEach(function (el) {
     if (el.cars !== undefined) {
       result.push(el.cars);
     }
   });
-  return result.flat().join(", ");
+  console.log(result);
+  return result.reduce(function (acc, el) {
+    return acc.concat(el);
+  }, []).join(", ");
 };
-console.log(carsString(users));
+console.log(createCarsString(users));
 var userInfo = {
   user1: users[0],
   user2: users[1],
@@ -122,7 +125,7 @@ var Book = /*#__PURE__*/function () {
   }]);
   return Book;
 }();
-var book = new Book('The Sign of Four', 'Arthur Conan Doyle', 1890);
+var book = new Book("The Sign of Four", "Arthur Conan Doyle", 1890);
 console.log(Book.bookInfo(book));
 function extractData(obj, key) {
   return obj[key];
