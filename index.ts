@@ -87,16 +87,12 @@ console.log(filterUsersWithAnimals(users));
 // 5. Создать функцию, которая бы принимала массив пользователей и отдавала бы  строку с названиями марок автомобилей через запятую
 
 const createCarsString = (arr: IUsers[]) => {
-  let result: string[][] = [];
-  arr.forEach((el: IUsers) => {
-    if (el.cars !== undefined) {
-      result.push(el.cars);
-    }
-  });
-  return result
-    .reduce((acc, el) => {
-      return acc.concat(el);
-    }, [])
+  return arr
+    .reduce(
+      (acc: string[], el: IUsers) =>
+        el.cars?.length ? [...acc, ...el.cars] : acc,
+      []
+    )
     .join(", ");
 };
 
