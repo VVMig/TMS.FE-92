@@ -5,4 +5,6 @@ export const StyledHeader = styled.header`
   display: flex;
   background-color: ${(props) => props.theme.blue};
   padding: 8px 20px;
+  justify-content: space-between;
+  align-items: center;
 `;

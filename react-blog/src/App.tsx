@@ -1,17 +1,21 @@
-import { useCallback, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
   RouteProps,
   Switch,
 } from "react-router-dom";
-import styled, { ThemeProvider } from "styled-components";
+import styled, { DefaultTheme, ThemeProvider } from "styled-components";
 import "./App.css";
 import { ErrorBoundary } from "./components/ErrorBoundries";
 import { Routes } from "./constants/Routes";
 import { Footer, Header } from "./layouts";
 import { AllPosts, Home, Post } from "./pages";
 import { Auth } from "./pages/common";
+import { UITheme } from "./store/uiSlice";
+import { uiThemeSelector } from "./store/uiSlice/selectors";
+import { initUser } from "./store/userSlice";
 import { themeDark, themeLight } from "./theme";
 
 const StyledBackground = styled.div`
@@ -73,19 +77,34 @@ const routes: IRoute[] = [
   },
 ];
 
-const App = () => {
-  const [isLightTheme, setIsLightTheme] = useState(true);
+const themeName: Record<UITheme, DefaultTheme> = {
+  dark: themeDark,
+  light: themeLight,
+};
 
-  const onToggleTheme = useCallback(() => {
-    setIsLightTheme((prev) => !prev);
+const App = () => {
+  const theme = useSelector(uiThemeSelector);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(
+        initUser({
+          id: Date.now(),
+          name: "user",
+          isAuth: true,
+        })
+      );
+    }, 2000);
   }, []);
 
   return (
     <ErrorBoundary>
-      <ThemeProvider theme={isLightTheme ? themeLight : themeDark}>
+      <ThemeProvider theme={themeName[theme]}>
         <StyledBackground>
           <Router>
-            <Header onToggleTheme={onToggleTheme} />
+            <Header />
             <Switch>
               {routes.map((route, routeIndex) => (
                 <Route
