@@ -7,7 +7,7 @@ export const SignUpEnd = ({ email }) => {
   const history = useHistory();
 
   const onClickBackHome = () => {
-    history.push(`${Routes.HOME}?form=end`);
+    history.push(Routes.HOME);
   };
 
   return (
@@ -20,7 +20,7 @@ export const SignUpEnd = ({ email }) => {
         <p> Please check your email</p>
       </StyledSignUpEndText>
       <CommonButton withWholeWidth onClick={onClickBackHome}>
-        Sign Up
+        Go to home
       </CommonButton>
     </>
   );

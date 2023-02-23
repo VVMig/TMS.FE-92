@@ -1,4 +1,8 @@
 export enum Routes {
   HOME = "/",
-  SIGNUP = "/signup",
+  REGISTER = "/register",
+  CONFIRMATION_EMAIL = "/confirm",
+  LOGIN = "/login",
+  ALL_POSTS = "/posts",
+  POST = "/posts/:id",
 }

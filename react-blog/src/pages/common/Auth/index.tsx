@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Routes } from "../../../constants/Routes";
 import { AuthHeader } from "./AuthHeader";
 import { SignInForm } from "./SignInForm";
 import { SignUpEnd } from "./SignUpEnd";
 import { SignUpForm } from "./SignUpForm";
-import { StyledFormAuthContainer } from "./styles";
+import { StyledContainer, StyledFormAuthContainer } from "./styles";
 
 const authHeaderTitle = {
   signup: "Sign Up",
@@ -15,19 +15,35 @@ const authHeaderTitle = {
 
 type FormStateType = "signup" | "signin" | "signupend";
 
-export const Auth = () => {
-  const [formState, setFormState] = useState<FormStateType>("signup");
+interface IProps {
+  formState: FormStateType;
+}
+
+export const Auth = ({ formState }: IProps) => {
   const [registredEmail, setRegistredEmail] = useState("");
-  const location = useLocation();
   const history = useHistory();
 
   const onChangeFormState = (newFormState: FormStateType) => () => {
-    setFormState(newFormState);
+    // setFormState(newFormState);
+    switch (newFormState) {
+      case "signup":
+        history.push(Routes.REGISTER);
+        break;
+      case "signin":
+        history.push(Routes.LOGIN);
+        break;
+      case "signupend":
+        history.push(Routes.CONFIRMATION_EMAIL);
+        break;
+      default:
+        break;
+    }
   };
 
   const onRegistrationEnd = (email: string) => {
     setRegistredEmail(email);
-    setFormState("signupend");
+
+    history.push(Routes.CONFIRMATION_EMAIL);
   };
 
   const renderFormState = () => {
@@ -48,17 +64,10 @@ export const Auth = () => {
     }
   };
 
-  useEffect(() => {
-    if (location.search) {
-      setFormState("signup");
-      history.push(Routes.HOME);
-    }
-  }, [location.search]);
-
   return (
-    <>
+    <StyledContainer>
       <AuthHeader title={authHeaderTitle[formState]} />
       <StyledFormAuthContainer>{renderFormState()}</StyledFormAuthContainer>
-    </>
+    </StyledContainer>
   );
 };

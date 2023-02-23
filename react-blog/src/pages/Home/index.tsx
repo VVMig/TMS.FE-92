@@ -1,6 +1,6 @@
 import { CircularProgress } from "@mui/material";
 import { useLoading } from "../../hooks/useLoading";
-import { Auth } from "./Auth";
+import { Feed } from "./Feed";
 import { StyledContainer } from "./styles";
 
 interface IProps {
@@ -12,7 +12,8 @@ export const Home = ({ time }: IProps) => {
 
   return (
     <StyledContainer>
-      {isLoading ? <CircularProgress /> : <Auth />}
+      {/* {isLoading ? <CircularProgress /> : <Auth />} */}
+      <Feed />
     </StyledContainer>
   );
 };

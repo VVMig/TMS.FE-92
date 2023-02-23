@@ -62,7 +62,7 @@ export const SignUpForm = ({
               <TextField label="Password" name="password" />
               <TextField label="Confirm password" name="confirmPassword" />
               <StyledSubmitButton disabled={!props.dirty} type="submit">
-                Create post
+                Sign Up
               </StyledSubmitButton>
               <StyledFormFooter>
                 <span>Already have an account?</span>

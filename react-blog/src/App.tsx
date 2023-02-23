@@ -1,11 +1,17 @@
 import { useCallback, useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  RouteProps,
+  Switch,
+} from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import "./App.css";
 import { ErrorBoundary } from "./components/ErrorBoundries";
 import { Routes } from "./constants/Routes";
 import { Footer, Header } from "./layouts";
-import { Home } from "./pages";
+import { AllPosts, Home, Post } from "./pages";
+import { Auth } from "./pages/common";
 import { themeDark, themeLight } from "./theme";
 
 const StyledBackground = styled.div`
@@ -19,6 +25,54 @@ const StyledBackground = styled.div`
   transition: background-color 0.2s linear;
 `;
 
+interface IRoute {
+  path: Routes;
+  routeProps?: RouteProps;
+  component: React.ReactNode;
+}
+
+const routes: IRoute[] = [
+  {
+    path: Routes.HOME,
+    routeProps: {
+      exact: true,
+    },
+    component: <Home />,
+  },
+  {
+    path: Routes.LOGIN,
+    routeProps: {
+      exact: true,
+    },
+    component: <Auth formState="signin" />,
+  },
+  {
+    path: Routes.REGISTER,
+    routeProps: {
+      exact: true,
+    },
+    component: <Auth formState="signup" />,
+  },
+  {
+    path: Routes.CONFIRMATION_EMAIL,
+    routeProps: {
+      exact: true,
+    },
+    component: <Auth formState="signupend" />,
+  },
+  {
+    path: Routes.ALL_POSTS,
+    component: <AllPosts />,
+    routeProps: {
+      exact: true,
+    },
+  },
+  {
+    path: Routes.POST,
+    component: <Post />,
+  },
+];
+
 const App = () => {
   const [isLightTheme, setIsLightTheme] = useState(true);
 
@@ -30,15 +84,21 @@ const App = () => {
     <ErrorBoundary>
       <ThemeProvider theme={isLightTheme ? themeLight : themeDark}>
         <StyledBackground>
-          <Header onToggleTheme={onToggleTheme} />
           <Router>
+            <Header onToggleTheme={onToggleTheme} />
             <Switch>
-              <Route path={Routes.HOME}>
-                <Home />
-              </Route>
+              {routes.map((route, routeIndex) => (
+                <Route
+                  path={route.path}
+                  {...route.routeProps}
+                  key={`${route.path}-${routeIndex}`}
+                >
+                  {route.component}
+                </Route>
+              ))}
             </Switch>
+            <Footer />
           </Router>
-          <Footer />
         </StyledBackground>
       </ThemeProvider>
     </ErrorBoundary>
