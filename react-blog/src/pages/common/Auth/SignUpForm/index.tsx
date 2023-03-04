@@ -1,4 +1,3 @@
-import { CircularProgress } from "@mui/material";
 import { Form, Formik } from "formik";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -77,8 +76,12 @@ export const SignUpForm = ({ onChangeFormState }: IProps) => {
                 name="confirmPassword"
                 type="password"
               />
-              <StyledSubmitButton disabled={!props.dirty} type="submit">
-                {loading ? <CircularProgress /> : "Sign Up"}
+              <StyledSubmitButton
+                disabled={!props.dirty}
+                type="submit"
+                loading={loading}
+              >
+                Sign Up
               </StyledSubmitButton>
               <StyledFormFooter>
                 <span>Already have an account?</span>
