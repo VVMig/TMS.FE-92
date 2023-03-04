@@ -1,22 +1,29 @@
+import { CircularProgress } from "@mui/material";
 import { Form, Formik } from "formik";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import * as Yup from "yup";
 
 import { TextField } from "../../../../components";
+import { Routes } from "../../../../constants/Routes";
+import { useAppDispatch } from "../../../../hooks/useAppDispatch";
+import { createUser, userSelector } from "../../../../store/userSlice";
 import { StyledFormFooter, StyledFormFooterAction } from "../styles";
 import { StyledSubmitButton } from "./styles";
 
 interface IProps {
   onChangeFormState: () => void;
-  onRegistrationEnd: (email: string) => void;
 }
 
-interface IFormValues {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+const initialValues = {
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
+type FormValues = typeof initialValues;
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -34,24 +41,29 @@ const StyledForm = styled(Form)`
   }
 `;
 
-export const SignUpForm = ({
-  onChangeFormState,
-  onRegistrationEnd,
-}: IProps) => {
-  const onSubmit = (values: IFormValues) => {
-    onRegistrationEnd(values.email);
+export const SignUpForm = ({ onChangeFormState }: IProps) => {
+  const history = useHistory();
+  const { loading } = useSelector(userSelector);
+
+  const dispatch = useAppDispatch();
+
+  const onSubmit = async (values: FormValues) => {
+    await dispatch(
+      createUser({
+        email: values.email,
+        password: values.password,
+        username: values.name,
+        callback: () =>
+          history.push(`${Routes.CONFIRMATION_EMAIL}?email=${values.email}`),
+      })
+    );
   };
 
   return (
     <>
       <div>
         <Formik
-          initialValues={{
-            name: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-          }}
+          initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
@@ -59,10 +71,14 @@ export const SignUpForm = ({
             <StyledForm>
               <TextField label="Name" name="name" />
               <TextField label="Email" name="email" />
-              <TextField label="Password" name="password" />
-              <TextField label="Confirm password" name="confirmPassword" />
+              <TextField label="Password" name="password" type="password" />
+              <TextField
+                label="Confirm password"
+                name="confirmPassword"
+                type="password"
+              />
               <StyledSubmitButton disabled={!props.dirty} type="submit">
-                Sign Up
+                {loading ? <CircularProgress /> : "Sign Up"}
               </StyledSubmitButton>
               <StyledFormFooter>
                 <span>Already have an account?</span>

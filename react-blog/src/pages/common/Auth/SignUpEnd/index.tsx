@@ -1,9 +1,12 @@
 import { useHistory } from "react-router-dom";
 import { CommonButton } from "../../../../components";
 import { Routes } from "../../../../constants/Routes";
+import { useQuery } from "../../../../hooks/useQuery";
 import { StyledSignUpEndText } from "./styles";
 
-export const SignUpEnd = ({ email }) => {
+export const SignUpEnd = () => {
+  const email = useQuery("email");
+
   const history = useHistory();
 
   const onClickBackHome = () => {

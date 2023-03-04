@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Routes } from "../../../constants/Routes";
 import { AuthHeader } from "./AuthHeader";
@@ -20,7 +19,6 @@ interface IProps {
 }
 
 export const Auth = ({ formState }: IProps) => {
-  const [registredEmail, setRegistredEmail] = useState("");
   const history = useHistory();
 
   const onChangeFormState = (newFormState: FormStateType) => () => {
@@ -40,25 +38,14 @@ export const Auth = ({ formState }: IProps) => {
     }
   };
 
-  const onRegistrationEnd = (email: string) => {
-    setRegistredEmail(email);
-
-    history.push(Routes.CONFIRMATION_EMAIL);
-  };
-
   const renderFormState = () => {
     switch (formState) {
       case "signin":
         return <SignInForm onChangeFormState={onChangeFormState("signup")} />;
       case "signup":
-        return (
-          <SignUpForm
-            onChangeFormState={onChangeFormState("signin")}
-            onRegistrationEnd={onRegistrationEnd}
-          />
-        );
+        return <SignUpForm onChangeFormState={onChangeFormState("signin")} />;
       case "signupend":
-        return <SignUpEnd email={registredEmail} />;
+        return <SignUpEnd />;
       default:
         break;
     }

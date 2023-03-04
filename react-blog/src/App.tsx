@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
@@ -15,7 +14,6 @@ import { AllPosts, Home, Post } from "./pages";
 import { Auth } from "./pages/common";
 import { UITheme } from "./store/uiSlice";
 import { uiThemeSelector } from "./store/uiSlice/selectors";
-import { initUser } from "./store/userSlice";
 import { themeDark, themeLight } from "./theme";
 
 const StyledBackground = styled.div`
@@ -85,26 +83,13 @@ const themeName: Record<UITheme, DefaultTheme> = {
 const App = () => {
   const theme = useSelector(uiThemeSelector);
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch(
-        initUser({
-          id: Date.now(),
-          name: "user",
-          isAuth: true,
-        })
-      );
-    }, 2000);
-  }, []);
-
   return (
     <ErrorBoundary>
       <ThemeProvider theme={themeName[theme]}>
         <StyledBackground>
           <Router>
             <Header />
+
             <Switch>
               {routes.map((route, routeIndex) => (
                 <Route
