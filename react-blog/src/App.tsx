@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
@@ -10,11 +10,17 @@ import "./App.css";
 import { ErrorBoundary } from "./components/ErrorBoundries";
 import { Routes } from "./constants/Routes";
 import { Footer, Header } from "./layouts";
-import { AllPosts, Home, Post } from "./pages";
+import { AllPosts, Home, Post, Verification } from "./pages";
 import { Auth } from "./pages/common";
 import { UITheme } from "./store/uiSlice";
 import { uiThemeSelector } from "./store/uiSlice/selectors";
 import { themeDark, themeLight } from "./theme";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
+import { LOCAL_STORAGE_KEYS } from "./constants/LocalStorageKeys";
+import { api, getCurrentUser } from "./services";
+import { initUser } from "./store/userSlice";
 
 const StyledBackground = styled.div`
   background-color: ${(props) => props.theme.bodyBackground};
@@ -73,6 +79,10 @@ const routes: IRoute[] = [
     path: Routes.POST,
     component: <Post />,
   },
+  {
+    path: Routes.VERIFICATION_EMAIL,
+    component: <Verification />,
+  },
 ];
 
 const themeName: Record<UITheme, DefaultTheme> = {
@@ -83,13 +93,33 @@ const themeName: Record<UITheme, DefaultTheme> = {
 const App = () => {
   const theme = useSelector(uiThemeSelector);
 
+  const dispatch = useDispatch();
+
+  const fetchCurrentUser = async () => {
+    const { data } = await getCurrentUser();
+
+    dispatch(initUser(data));
+  };
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
+
+    if (accessToken) {
+      api.defaults.headers.common = {
+        Authorization: "Bearer " + accessToken,
+      };
+
+      fetchCurrentUser();
+    }
+  }, []);
+
   return (
     <ErrorBoundary>
       <ThemeProvider theme={themeName[theme]}>
         <StyledBackground>
           <Router>
             <Header />
-
+            <ToastContainer theme={theme} />
             <Switch>
               {routes.map((route, routeIndex) => (
                 <Route

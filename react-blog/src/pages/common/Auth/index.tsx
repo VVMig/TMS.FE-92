@@ -1,5 +1,9 @@
-import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Redirect, useHistory } from "react-router-dom";
 import { Routes } from "../../../constants/Routes";
+import { userSelector } from "../../../store/userSlice";
+import { ActivateError } from "./ActivateError";
+import { ActivateSuccess } from "./ActivateSuccess";
 import { AuthHeader } from "./AuthHeader";
 import { SignInForm } from "./SignInForm";
 import { SignUpEnd } from "./SignUpEnd";
@@ -10,19 +14,26 @@ const authHeaderTitle = {
   signup: "Sign Up",
   signin: "Sign In",
   signupend: "Registration Confirmation",
+  activatesuccess: "Success",
+  activateerror: "Error",
 };
 
-type FormStateType = "signup" | "signin" | "signupend";
+type FormStateType =
+  | "signup"
+  | "signin"
+  | "signupend"
+  | "activatesuccess"
+  | "activateerror";
 
 interface IProps {
   formState: FormStateType;
 }
 
 export const Auth = ({ formState }: IProps) => {
+  const user = useSelector(userSelector);
   const history = useHistory();
 
   const onChangeFormState = (newFormState: FormStateType) => () => {
-    // setFormState(newFormState);
     switch (newFormState) {
       case "signup":
         history.push(Routes.REGISTER);
@@ -46,10 +57,22 @@ export const Auth = ({ formState }: IProps) => {
         return <SignUpForm onChangeFormState={onChangeFormState("signin")} />;
       case "signupend":
         return <SignUpEnd />;
+      case "activatesuccess":
+        return <ActivateSuccess />;
+      case "activateerror":
+        return <ActivateError />;
       default:
         break;
     }
   };
+
+  if (
+    user.isAuth &&
+    (history.location.pathname === Routes.LOGIN ||
+      history.location.pathname === Routes.REGISTER)
+  ) {
+    return <Redirect to={Routes.HOME} />;
+  }
 
   return (
     <StyledContainer>

@@ -24,14 +24,21 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    initUser(state, action: PayloadAction<IUserState>) {
+    initUser(
+      state,
+      action: PayloadAction<
+        Pick<IUserState, "email" | "id"> & { username: string }
+      >
+    ) {
       state.id = action.payload.id;
-      state.name = action.payload.name;
-      state.isAuth = action.payload.isAuth;
+      state.name = action.payload.username;
+      state.email = action.payload.email;
+      state.isAuth = true;
     },
     resetUser(state) {
       state.isAuth = initialState.isAuth;
       state.name = initialState.name;
+      state.email = initialState.email;
       state.id = initialState.id;
     },
   },
